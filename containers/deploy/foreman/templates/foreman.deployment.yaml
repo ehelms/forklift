@@ -62,7 +62,3 @@ spec:
             secretName: certs
           name: certs
   replicas: 1
-  strategy:
-    type: Rolling
-    rollingParams:
-      timeoutSeconds: 900

@@ -1,17 +1,22 @@
 ---
-- name: Manage the lifecycle of Foreman on OpenShift™
+- name: Deploy Candlepin
   hosts: localhost
   gather_facts: no
   connection: local
   vars:
     minishift: true
     cluster_up: false
-    pulp_worker_count: 2
     registry: quay.io/foreman
+    project_name: candlepin
     deployment_state: present
   pre_tasks:
     - set_fact:
         project_name: "{{ project_name | default('foreman') }}"
+
+    #- set_fact:
+    #    postgres_user: "{{ candlepin_database_user }}"
+    #    postgres_database: "{{ candlepin_database_user }}"
+    #    postgres_password: "{{ candlepin_database_password }}"
 
     - set_fact:
         application_hostname: "{{ application_hostname | default('') }}"
@@ -27,5 +32,4 @@
   roles:
     - project
     - service-accounts
-    - foreman
-    - foreman-proxy
+    - candlepin

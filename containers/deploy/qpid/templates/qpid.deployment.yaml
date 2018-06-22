@@ -22,7 +22,3 @@ spec:
       serviceAccount: anyuid
       serviceAccountName: anyuid
   replicas: 1
-  strategy:
-    type: Rolling
-    rollingParams:
-      timeoutSeconds: 900

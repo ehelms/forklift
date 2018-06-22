@@ -5,39 +5,31 @@ metadata:
   name: postgres
   namespace: "{{ project_name }}"
   labels:
-    app: foreman
-    service: postgres
+    app: postgres
 spec:
+  replicas: 1
   template:
     metadata:
       labels:
-        app: foreman
-        service: postgres
+        app: postgres
     spec:
       containers:
         - name: postgres
-          securityContext: {}
-          state: present
+          image: ansible/postgresql
           env:
             - name: POSTGRES_DB
-              value: foreman
+              value: "{{ postgres_database }}"
             - name: POSTGRES_USER
-              value: foreman
+              value: "{{ postgres_user }}"
             - name: POSTGRES_PASS
-              value: foreman
+              value: "{{ postgres_password }}"
             - name: PGDATA
               value: /var/lib/pgsql/data/userdata
           volumeMounts:
             - readOnly: false
               mountPath: /var/lib/pgsql/data
               name: postgres-data
-          image: ansible/postgresql
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
             claimName: postgres-data
-  replicas: 1
-  strategy:
-    type: Rolling
-    rollingParams:
-      timeoutSeconds: 900

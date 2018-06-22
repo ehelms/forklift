@@ -1,0 +1,5 @@
+---
+candlepin_oauth_secret: candlepin
+candlepin_database: candlepin
+candlepin_database_user: candlepin
+candlepin_database_password: candlepin

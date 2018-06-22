@@ -2,6 +2,13 @@
 - name: candlepin service
   k8s_raw:
     state: "{{ deployment_state }}"
+    definition: "{{ lookup('template', 'templates/' + item + '.secret.yaml') | from_yaml }}"
+  with_items:
+    - candlepin
+
+- name: candlepin service
+  k8s_raw:
+    state: "{{ deployment_state }}"
     definition: "{{ lookup('template', 'templates/' + item + '.service.yaml') | from_yaml }}"
   with_items:
     - candlepin

@@ -6,11 +6,9 @@ RUN echo "tsflags=nodocs" >> /etc/yum.conf && \
     yum -y install candlepin openssl qpid-tools && \
     yum clean all
 
-COPY container-assets/candlepin.conf /etc/candlepin/candlepin.conf
 COPY container-assets/entrypoint.sh /usr/bin/entrypoint.sh
-COPY container-assets/start_candlepin.sh /usr/bin/start_candlepin.sh
 COPY container-assets/wait_on_postgres.py /usr/bin/wait_on_postgres.py
-COPY container-assets/gen-certs /usr/bin/gen-certs
+#COPY container-assets/gen-certs /usr/bin/gen-certs
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["/usr/bin/start_candlepin.sh"]
+CMD ["/usr/libexec/tomcat/server", "start"]

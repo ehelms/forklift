@@ -1,4 +1,8 @@
 ---
 dependencies:
-  - {role: postgres}
+  - {role: certificates}
+  - role: postgres
+    postgres_user: "{{ candlepin_database_user }}"
+    postgres_database: "{{ candlepin_database_user }}"
+    postgres_password: "{{ candlepin_database_password }}"
   - {role: qpid}
