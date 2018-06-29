@@ -3,7 +3,6 @@
   gather_facts: no
   vars:
     project: foreman
-    minishift: true
     registry: "{{ lookup('pipe', 'minishift openshift registry') }}"
   tasks:
     - name: 'Docker login to openshift registry'
