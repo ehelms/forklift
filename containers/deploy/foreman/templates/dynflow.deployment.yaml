@@ -8,6 +8,7 @@ metadata:
     app: foreman
     service: dynflow
 spec:
+  replicas: 2
   template:
     metadata:
       labels:
@@ -54,7 +55,6 @@ spec:
                 key: pulp-client.crt
             secretName: certs
           name: certs
-  replicas: 1
   strategy:
     type: Rolling
     rollingParams:

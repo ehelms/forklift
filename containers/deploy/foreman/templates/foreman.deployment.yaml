@@ -8,6 +8,7 @@ metadata:
     app: foreman
     service: foreman
 spec:
+  replicas: 2
   template:
     metadata:
       labels:
@@ -41,7 +42,7 @@ spec:
           ports:
             - protocol: TCP
               containerPort: 8080
-          image: "{{ registry }}/foreman:latest"
+          image: "172.30.1.1:5000/foreman/foreman:latest"
       serviceAccount: anyuid
       serviceAccountName: anyuid
       volumes:
@@ -61,7 +62,6 @@ spec:
                 key: pulp-client.crt
             secretName: certs
           name: certs
-  replicas: 1
   strategy:
     type: Rolling
     rollingParams:

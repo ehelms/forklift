@@ -24,7 +24,7 @@
         application_hostname: "foreman.{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}.nip.io"
       when: application_hostname == '' and cluster_up == true and minishift == false
   roles:
-    - project
+    #- project
     - service-accounts
     - foreman
-    - foreman-proxy
+    #- foreman-proxy
