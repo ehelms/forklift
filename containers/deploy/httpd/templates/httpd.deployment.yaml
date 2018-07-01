@@ -5,8 +5,7 @@ metadata:
   name: httpd
   namespace: "{{ project_name }}"
   labels:
-    app: foreman
-    service: httpd
+    app: httpd
 spec:
   selector:
     name: httpd
@@ -15,16 +14,40 @@ spec:
     recreateParams:
       timeoutSeconds: 1200
   triggers:
-      - type: ConfigChange
+    - type: ConfigChange
   replicas: 1
   template:
     metadata:
       name: "httpd"
       labels:
-        name: "httpd"
+        app: "httpd"
     spec:
       serviceAccount: anyuid
       serviceAccountName: anyuid
+      containers:
+        - name: httpd
+          image: "manageiq/httpd:latest"
+          command:
+            - /usr/sbin/init
+          ports:
+            - containerPort: 80
+              protocol: TCP
+            - containerPort: 443
+              protocol: TCP
+          volumeMounts:
+            - name: httpd-config
+              mountPath: "/etc/httpd/conf.d"
+            - name: keys
+              mountPath: /etc/pki/katello/private
+              readOnly: true
+            - name: certs
+              mountPath: /etc/pki/katello/certs
+              readOnly: true
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/usr/bin/save-container-environment"
       volumes:
         - name: httpd-config
           configMap:
@@ -43,27 +66,3 @@ spec:
             items:
               - path: server.key
                 key: server.key
-      containers:
-        - name: httpd
-          image: "manageiq/httpd:latest"
-          command:
-            - /usr/sbin/init
-          ports:
-            - containerPort: 80
-              protocol: TCP
-            - containerPort: 443
-              protocol: TCP
-          volumeMounts:
-            - name: httpd-config
-              mountPath: "/etc/httpd/conf.d"
-            - readOnly: true
-              mountPath: /etc/pki/katello/private
-              name: keys
-            - readOnly: true
-              mountPath: /etc/pki/katello/certs
-              name: certs
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - "/usr/bin/save-container-environment"

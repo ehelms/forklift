@@ -6,13 +6,6 @@
   with_items:
     - pub-data
 
-- name: foreman config maps
-  k8s:
-    state: "{{ deployment_state }}"
-    definition: "{{ lookup('template', 'templates/' + item + '.config-map.yaml') | from_yaml }}"
-  with_items:
-    - httpd
-
 - name: foreman jobs
   k8s:
     state: "{{ deployment_state }}"
@@ -26,7 +19,6 @@
     definition: "{{ lookup('template', 'templates/' + item + '.service.yaml') | from_yaml }}"
   with_items:
     - foreman
-    - httpd
     - memcached
 
 - name: foreman deployment
@@ -37,7 +29,6 @@
     - foreman
     - dynflow
     - memcached
-    - httpd
 
 - name: foreman routes
   k8s:
