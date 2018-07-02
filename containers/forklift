@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+source_code=ARGV[0]
+
+def node_port(service)
+  service = `oc describe svc #{service}`
+  service = service.split("\n").find { |line| line.start_with?('NodePort') }
+  return nil if service.nil?
+
+  service = service.split(" ").last
+  service.split("/").first
+end
+
+postgres_port = node_port('postgres')
+candlepin_port = node_port('candlepin')
+pulp_port = node_port('pulp')
+
+puts postgres_port
+puts candlepin_port
+puts pulp_port
+
+minishift_ip = `minishift ip`.strip
+
+system("docker run --rm -it -e POSTGRES_SERVICE_HOST=#{minishift_ip} -e POSTGRES_SERVICE_PORT=#{postgres_port} -p 5000:5000 -p 3808:3808 -v #{source_code}:/opt/app-root/src/foreman:Z -v #{source_code}/../katello:/opt/app-root/src/katello:Z --network host quay.io/foreman/foreman-dev #{ARGV[1]}")

@@ -1,4 +1,5 @@
 ---
 dependencies:
+  - {role: certificates}
   - {role: postgres}
   - {role: qpid}

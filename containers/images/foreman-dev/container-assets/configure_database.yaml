@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - set_fact:
+        postgres_port: "{{ lookup('env', 'POSTGRES_SERVICE_PORT') | int }}"
+        postgres_host: "{{ lookup('env', 'POSTGRES_SERVICE_HOST') }}"
+
+    - name: 'database config file'
+      copy:
+        dest: "{{ lookup('pipe', 'pwd') }}/../foreman/config/database.yml"
+        content: |
+          development:
+            adapter: postgresql
+            encoding: unicode
+            pool: 5
+            database: foreman
+            username: foreman
+            password: foreman
+            host: {{ postgres_host }}
+            port: {{ postgres_port }}

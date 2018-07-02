@@ -5,19 +5,15 @@ metadata:
   name: postgres
   namespace: "{{ project_name }}"
   labels:
-    app: foreman
-    service: postgres
+    app: postgres
 spec:
   template:
     metadata:
       labels:
-        app: foreman
-        service: postgres
+        app: postgres
     spec:
       containers:
         - name: postgres
-          securityContext: {}
-          state: present
           env:
             - name: POSTGRES_DB
               value: foreman

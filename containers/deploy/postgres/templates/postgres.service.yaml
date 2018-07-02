@@ -5,14 +5,13 @@ metadata:
   name: postgres
   namespace: "{{ project_name }}"
   labels:
-    app: foreman
-    service: postgres
+    app: postgres
 spec:
+  type: LoadBalancer
   selector:
-    app: foreman
-    service: postgres
+    app: postgres
   ports:
     - protocol: TCP
       targetPort: 5432
-      name: port-5432-tcp
+      name: postgres
       port: 5432

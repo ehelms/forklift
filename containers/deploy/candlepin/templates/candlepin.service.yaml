@@ -8,6 +8,7 @@ metadata:
     app: foreman
     service: candlepin
 spec:
+  type: LoadBalancer
   selector:
     app: foreman
     service: candlepin

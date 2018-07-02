@@ -13,7 +13,7 @@ if __name__ == '__main__':
     while not postgres_is_alive and tries < 100:
         tries += 1
         try:
-            s.connect(('postgres', 5432))
+            s.connect(('192.168.42.116', 31839))
         except socket.error:
             time.sleep(3)
         else:
