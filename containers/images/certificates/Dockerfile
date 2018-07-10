@@ -2,16 +2,13 @@ FROM centos:7
 
 RUN echo "tsflags=nodocs" >> /etc/yum.conf && \
     yum -y install epel-release && \
-    yum -y install openssl ansible rpm-build git python-pip && \
+    yum -y install openssl rpm-build git python-pip && \
     yum clean all
 
 WORKDIR /root
 
 RUN pip install setuptools --upgrade
-RUN pip install openshift
-
-COPY container-assets/requirements.yml /root/requirements.yml
-RUN ansible-galaxy install -r requirements.yml
+RUN pip install openshift ansible
 
 COPY container-assets/certificates /root/roles/certificates
 COPY container-assets/client-rpm /root/roles/client-rpm

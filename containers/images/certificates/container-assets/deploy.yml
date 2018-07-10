@@ -1,9 +1,7 @@
-- name: Manage the lifecycle of Foreman on OpenShift™
-  hosts: localhost
+---
+- hosts: localhost
   gather_facts: no
   connection: local
-  roles:
-    - role: ansible-kubernetes-modules
   vars_files:
     - secrets.yml
   environment:
