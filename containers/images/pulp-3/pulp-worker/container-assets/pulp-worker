@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec scl enable rh-python36 "rq worker --url 'redis://$REDIS_SERVICE_HOST:$REDIS_SERVICE_PORT' -n reserved_resource_worker@$HOSTNAME -w 'pulpcore.tasking.worker.PulpWorker'"

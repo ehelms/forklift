@@ -1,0 +1,25 @@
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: pulp-developer
+rules:
+- apiGroups:
+  - app.pulpproject.org
+  resources:
+  - "*"
+  verbs:
+  - "*"
+
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: pulp-developer
+subjects:
+- kind: User
+  name: developer
+roleRef:
+  kind: ClusterRole
+  name: pulp-developer
+  apiGroup: rbac.authorization.k8s.io

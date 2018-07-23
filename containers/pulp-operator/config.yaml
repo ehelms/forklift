@@ -1,0 +1,6 @@
+---
+- name: Pulp
+  version: v1alpha1
+  group: app.pulpproject.org
+  kind: Pulp
+  path: /opt/ansible/roles/playbook.yaml

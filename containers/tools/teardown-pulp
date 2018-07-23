@@ -1,0 +1,9 @@
+#!/bin/bash
+
+oc login -u system:admin
+
+oc delete -f pulp-operator/deploy/*.yaml
+oc delete serviceaccounts pulp-operator
+oc delete project pulp
+
+oc login -u developer

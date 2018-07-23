@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pulp-operator
+  namespace: pulp
+  labels:
+    k8s-app: pulp-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: pulp-operator
+  template:
+    metadata:
+      labels:
+        k8s-app: pulp-operator
+    spec:
+      serviceAccountName: pulp-operator
+      containers:
+        - name: pulp-operator
+          image: quay.io/foreman/pulp-operator:latest
+          command:
+            - ansible-operator
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace

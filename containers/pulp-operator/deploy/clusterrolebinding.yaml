@@ -1,0 +1,13 @@
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: pulp-operator
+subjects:
+- kind: ServiceAccount
+  name: pulp-operator
+  namespace: pulp
+roleRef:
+  kind: ClusterRole
+  name: pulp-operator
+  apiGroup: rbac.authorization.k8s.io

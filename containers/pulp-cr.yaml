@@ -1,0 +1,14 @@
+apiVersion: app.pulpproject.org/v1alpha1
+kind: Pulp
+metadata:
+  name: "mypulp"
+  namespace: pulp
+spec:
+  version: master
+  pulp_core:
+    replicas: 2
+    log_level: INFO
+  pulp_worker:
+    replicas: 2
+  pulp_resource_manager:
+    replicas: 2

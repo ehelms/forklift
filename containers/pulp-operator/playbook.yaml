@@ -1,0 +1,14 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    project_name: pulp
+    deployment_state: present
+    registry: quay.io/foreman
+  roles:
+    - service-accounts
+    - postgres
+    - redis
+    - pulp-core
+    - pulp-resource-manager
+    - pulp-worker
+    - pulp-routes
