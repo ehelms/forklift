@@ -1,0 +1,14 @@
+[Unit]
+Description=Foreman
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill foreman1
+ExecStartPre=-/usr/bin/docker rm foreman1
+ExecStartPre=/usr/bin/docker pull quay.io/foreman/foreman:latest
+ExecStart=/usr/bin/docker run --name foreman1 -e RAILS_ENV=production -e POSTGRES_SERVICE_HOST={{ ansible_default_ipv4.address }} -e DATABASE_SERVICE_NAME=postgres -e POSTGRES_USER=foreman -e POSTGRES_PASSWORD={{ postgres_password }} --publish 3000:3000 quay.io/foreman/foreman
+
+[Install]
+WantedBy=multi-user.target
