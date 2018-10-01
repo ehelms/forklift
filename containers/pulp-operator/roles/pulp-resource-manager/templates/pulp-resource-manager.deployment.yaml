@@ -22,8 +22,8 @@ spec:
           configMap:
             name: pulp-server
             items:
-              - path: server.yaml
-                key: server.yaml
+              - path: settings.py
+                key: settings.py
       containers:
         - name: pulp-resource-manager
           image: "{{ registry }}/pulp-resource-manager:{{ version }}"
