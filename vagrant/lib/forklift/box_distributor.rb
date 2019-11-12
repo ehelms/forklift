@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require_relative 'settings'
+
 module Forklift
   class BoxDistributor
 
-    VAGRANTFILE_API_VERSION = '2'
+    VAGRANTFILE_API_VERSION = '2'.freeze
 
     if Gem.loaded_specs['vagrant']
       SUPPORT_NAMED_PROVISIONERS = Gem.loaded_specs['vagrant'].version >= Gem::Version.create('1.7')
@@ -21,8 +23,6 @@ module Forklift
     end
 
     def settings
-      overrides = {}
-      settings_file = File.join(__dir__, '..', '..', 'settings.yaml')
       default_settings = {
         'memory' => 6144,
         'cpus' => 2,
@@ -36,7 +36,7 @@ module Forklift
         'hostmanager_enabled' => true
       }
 
-      overrides = YAML.load_file(settings_file) if File.exist?(settings_file)
+      overrides = Settings.new.settings
 
       default_settings.merge(overrides)
     end

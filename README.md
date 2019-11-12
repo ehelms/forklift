@@ -165,8 +165,8 @@ static:
     management_network_address: 172.23.99.0/24
 ```
 
-Example with openstack provider:  
-You will need to install vagrant openstack provider. For more information click [here](https://github.com/ggiamarchi/vagrant-openstack-provider).  
+Example with openstack provider:
+You will need to install vagrant openstack provider. For more information click [here](https://github.com/ggiamarchi/vagrant-openstack-provider).
 Do not forget to set openstack API credentials.
 To use openstack provider as default look [here](https://www.vagrantup.com/docs/providers/default.html).
 
@@ -246,6 +246,18 @@ Some settings can be customized for the entirety of the deployment, they are:
  * libvirt_options, virtualbox_options, rackspace_options, openstack_options, google_options: custom options for the various providers
 
 To customize any of these, copy `settings.yaml.example` to `settings.yaml` and add, remove or update the ones you wish to change'
+
+#### Customize Available Boxes
+
+The list of available boxes can be customized by setting an exclude list in `settings.yaml`. This allows faster `vagrant status` calls as well as reducing the the scope of boxes a user sees to tailor to their use cases. To specify boxes to exclude add the following to `settings.yaml`, for example, to remove fips, fedora and any Foreman 1.2X boxes from view:
+
+```
+boxes:
+  exclude:
+    - fips
+    - fedora
+    - '1.2'
+```
 
 ### Post Install Playbooks
 

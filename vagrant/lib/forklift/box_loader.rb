@@ -35,5 +35,15 @@ module Forklift
       YAML.load_file("#{@root_dir}/config/versions.yaml")
     end
 
+    def box_config
+      config = if File.exist?("#{@root_dir}/config/boxes.yaml")
+                 "#{@root_dir}/config/boxes.yaml"
+               else
+                 "#{@root_dir}/config/boxes.all.yaml"
+               end
+
+      YAML.load_file(config)
+    end
+
   end
 end
