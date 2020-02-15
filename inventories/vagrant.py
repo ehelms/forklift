@@ -26,6 +26,7 @@ def parse_args():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--list', action='store_true')
     group.add_argument('--host')
+    group.add_argument('--inventory', action='store_true')
     return parser.parse_args()
 
 
@@ -104,6 +105,14 @@ def get_configs(hosts):
             details.update(get_host_ssh_config(ssh_configs, host))
         yield host, details
 
+def generate_inventory_file(hosts):
+    inventory = ''
+    for host, info in hosts.iteritems():
+        if host == None:
+            next
+        inventory += "%s ansible_host=%s ansible_user=%s ansible_ssh_private_key_file=%s\n" % (host, info['ansible_host'], info['ansible_user'], info['ansible_ssh_private_key_file'])
+
+    return inventory
 
 def main():
     args = parse_args()
@@ -113,6 +122,10 @@ def main():
     elif args.host:
         details = dict(get_configs([args.host]))
         json.dump(details[args.host], sys.stdout)
+    elif args.inventory:
+        hosts = list_running_hosts()
+        hosts = generate_inventory_file(hosts)
+        print(hosts)
 
 
 if __name__ == '__main__':
