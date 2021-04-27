@@ -29,6 +29,22 @@ load foreman_helper
   [[ $output != *"FAIL"* ]]
 }
 
+@test "check maintain RPM" {
+  rpm -q rubygem-foreman_maintain
+}
+
+@test "check maintain" {
+  which foreman-maintain
+}
+
+@test "check maintain" {
+  ls -la /bin/foreman-maintain
+}
+
 @test "check service status" {
   foreman-maintain service status
+}
+
+@test "check service status directly" {
+  /bin/foreman-maintain service status
 }
